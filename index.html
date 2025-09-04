@@ -1,283 +1,967 @@
-<!doctype html>
-<html lang="en" class="scroll-smooth">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mostafa Mahmoud — Portfolio</title>
-  <meta name="description" content="Mostafa Mahmoud — Graphic Designer & MEAN Stack Developer. Visual identity, UI/UX, and full‑stack web apps." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostafa Mahmoud - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            matrix: { bg: '#070F0A', grid: '#0e2619', neon: '#00ff84', neon2: '#16f1a6', dim: '#00b566' }
-          },
-          boxShadow: { neon: '0 0 12px rgba(22, 241, 166, .55), inset 0 0 8px rgba(22,241,166,.25)' },
-          keyframes: {
-            flicker: { '0%,19%,21%,23%,25%,54%,56%,100%': { opacity: 1 }, '20%,24%,55%': { opacity: .6 } },
-            type: { '0%': { width: '0' }, '100%': { width: '100%' } }
-          },
-          animation: { flicker: 'flicker 2.4s infinite', type: 'type 3s steps(40,end) .4s 1 both' }
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
-    }
-  </script>
-  <style>
-    :root{ --bg:#070F0A; --grid:#0e2619; --neon:#00ff84; --neon2:#16f1a6; --dim:#00b566; }
-    body{ font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: var(--bg); color: #b7ffdf }
-    .orbitron{ font-family: 'Orbitron', sans-serif }
-    .crt:after{ content:''; position:fixed; inset:0; pointer-events:none; background: repeating-linear-gradient( to bottom, rgba(0,0,0,.15) 0 1px, rgba(0,0,0,.05) 2px 3px ); mix-blend-mode:multiply; opacity:.35 }
-    .gridframe{ box-shadow: inset 0 0 0 2px var(--grid), inset 0 0 0 4px rgba(0,0,0,.5), 0 0 0 1px rgba(0,0,0,.8); border-radius: 18px }
-    .neon-border{ box-shadow: 0 0 0 2px var(--dim), 0 0 16px rgba(0,255,132,.35), inset 0 0 20px rgba(0,255,132,.15) }
-    .caret::after{ content:'▍'; margin-left:.25rem; color:var(--neon); animation: blink 1.1s steps(1,end) infinite }
-    @keyframes blink{ 50%{ opacity:0 } }
-    .snap-y-mandatory{ scroll-snap-type: y mandatory }
-    section[role="panel"]{ scroll-snap-align: start }
-    .reveal{ opacity:0; transform: translateY(18px) scale(.98); transition: all .8s cubic-bezier(.2,.8,.2,1) }
-    .reveal.show{ opacity:1; transform: translateY(0) scale(1) }
-    #loader{ position: fixed; inset: 0; background: radial-gradient(1200px 600px at 50% 50%, rgba(9,40,24,.75), rgba(7,15,10,1)); display:grid; place-items:center; z-index:9999 }
-    .progress{ height:6px; border-radius:999px; box-shadow: inset 0 0 0 1px var(--dim), 0 0 16px rgba(0,255,132,.25) }
-    .progress>span{ display:block; height:100%; width:0%; background: linear-gradient(90deg,var(--dim),var(--neon)); box-shadow: 0 0 16px rgba(0,255,132,.5) }
-    #codeRain{ position: fixed; inset:0; z-index:0; opacity:.32 }
-    @keyframes neonFlicker {
+
+        body {
+            font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            background: #0a0a0a;
+            color: #00ff41;
+            overflow: hidden;
+        }
+
+        /* Matrix Background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a 0%, #0f0f0f 50%, #0a0a0a 100%);
+        }
+
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100px;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            color: #00ff41;
+            animation: matrix-fall linear infinite;
+            text-shadow: 0 0 5px #00ff41;
+            opacity: 0.7;
+        }
+
+        /* Slower matrix animation */
+        @keyframes matrix-fall {
+            0% { transform: translateY(-100vh); opacity: 0.7; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* TV Static Effect */
+        .tv-static::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 65, 0.02) 2px,
+                    rgba(0, 255, 65, 0.02) 4px
+                );
+            animation: tv-lines 0.2s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Slower TV static animation */
+        @keyframes tv-lines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(6px); }
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .typewriter {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #00ff41;
+            text-shadow: 0 0 20px #00ff41;
+            border-right: 2px solid #00ff41;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #00ff41; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 4px;
+            background: #333;
+            margin-top: 2rem;
+            border: 1px solid #00ff41;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41, #00cc33);
+            width: 0%;
+            animation: loading 3s ease-in-out forwards;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Improved section transitions and positioning */
+        .section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh; /* Dynamic viewport height for mobile */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 10;
+        }
+
+        /* Billboard name animation */
+        .billboard-name {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            color: #00ff41;
+            text-shadow: 
+                0 0 20px #00ff41,
+                0 0 40px #00ff41,
+                0 0 60px #00ff41;
+            animation: billboard-glow 3s ease-in-out infinite alternate;
+            letter-spacing: 0.1em;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes billboard-glow {
+            0% { 
+                text-shadow: 
+                    0 0 20px #00ff41,
+                    0 0 40px #00ff41,
+                    0 0 60px #00ff41;
+                transform: scale(1);
+            }
+            100% { 
+                text-shadow: 
+                    0 0 30px #00ff41,
+                    0 0 60px #00ff41,
+                    0 0 90px #00ff41,
+                    0 0 120px #00ff41;
+                transform: scale(1.02);
+            }
+        }
+
+        /* Typing animation for subtitle */
+        .typing-subtitle {
+            font-family: 'Courier Prime', monospace;
+            font-size: clamp(1rem, 3vw, 2rem);
+            color: #00ff41;
+            text-align: center;
+            border-right: 2px solid #00ff41;
+            animation: blink 1s infinite;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cyber-border {
+            border: 2px solid #00ff41;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 30px #00ff41;
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 8px;
+            background: #333;
+            border: 1px solid #00ff41;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41, #00cc33);
+            transition: width 2s ease;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        .project-card {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00ff41;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #00ff41;
+            background: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #00ff41;
+            box-shadow: 0 0 15px #00ff41;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00ff41;
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto; /* Enable normal scrolling on mobile */
+            }
+            
+            .section {
+                position: relative; /* Change from fixed to relative positioning on mobile */
+                opacity: 1; /* Always show sections on mobile */
+                transform: translateY(0); /* Remove transform on mobile */
+                z-index: 1;
+                margin-bottom: 2rem; /* Add spacing between sections on mobile */
+            }
+            
+            .billboard-name {
+                font-size: clamp(2rem, 10vw, 4rem);
+                margin-bottom: 1rem;
+            }
+            
+            .typing-subtitle {
+                font-size: clamp(0.8rem, 4vw, 1.2rem);
+                min-height: 2rem;
+            }
+            
+            .section {
+                padding: 0.5rem;
+                align-items: flex-start;
+                padding-top: 2rem;
+            }
+            
+            .section .max-w-6xl,
+            .section .max-w-4xl {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .cyber-border {
+                padding: 1rem !important;
+                margin: 0.5rem 0;
+            }
+            
+            nav {
+                display: none; /* Hide navigation dots on mobile since we're using normal scrolling */
+            }
+            
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .grid.md\\:grid-cols-2 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .grid.md\\:grid-cols-3 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            h3 {
+                font-size: 1.2rem !important;
+            }
+            
+            .scroll-indicator {
+                display: none; /* Hide scroll indicator on mobile since normal scrolling is enabled */
+            }
+            
+            .project-card {
+                margin-bottom: 1rem;
+            }
+            
+            .grid.grid-cols-2 {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Added extra small screen support */
+        @media (max-width: 480px) {
+            .billboard-name {
+                font-size: clamp(1.5rem, 12vw, 3rem);
+                letter-spacing: 0.05em;
+            }
+            
+            .typing-subtitle {
+                font-size: clamp(0.7rem, 5vw, 1rem);
+            }
+            
+            .cyber-border {
+                padding: 0.75rem !important;
+            }
+            
+            h2 {
+                font-size: 1.25rem !important;
+            }
+            
+            .section {
+                padding: 0.25rem;
+                padding-top: 1rem;
+            }
+        }
+        
+        /* Added landscape mobile support */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .section {
+                align-items: flex-start;
+                padding-top: 1rem;
+            }
+            
+            .billboard-name {
+                font-size: clamp(1.5rem, 8vw, 3rem);
+                margin-bottom: 0.5rem;
+            }
+            
+            .scroll-indicator {
+                display: none;
+            }
+        }
+
+         @keyframes neonFlicker {
   0%,18%,22%,25%,53%,57%,100% { opacity: 1; text-shadow: 0 0 6px var(--neon), 0 0 20px rgba(0,255,132,.35); }
   20%,24%,55% { opacity: .85; text-shadow: 0 0 2px var(--neon); }
 }
 .neon-flicker { animation: neonFlicker 4.8s infinite; }
-
-.card {
-
-}
-.card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 10px 30px rgba(0,255,132,.15), 0 0 20px rgba(0,255,132,.18);
-  border-color: var(--neon);
-  transition: all 0.3s ease;
-}
-
-section { scroll-snap-align: start; min-height: 100svh; display: grid; place-items: center; padding: 4rem 1rem; }
-
-#codeRain { pointer-events: none; }
-  </style>
+    </style>
 </head>
-<body class="crt relative min-h-screen overflow-y-scroll snap-y-mandatory">
-  <canvas id="codeRain"></canvas>
-
-  <div id="loader" class="text-emerald-300">
-    <div class="w-[92vw] max-w-2xl gridframe neon-border p-6 md:p-8 bg-black/30 backdrop-blur-sm">
-      <div class="text-xs tracking-[.35em] text-emerald-400/70 uppercase mb-4">boot_sequence</div>
-      <p class="text-lg caret">&gt; run mostafa.r()</p>
-      <p class="mt-2 text-lg caret" id="loaderLine">&gt; load core.modules...</p>
-      <div class="mt-6 progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"><span id="bar"></span></div>
-      <div class="mt-4 text-right text-sm"><span id="pct">0%</span></div>
-      <button id="launch" class="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-xl text-black font-bold bg-[var(--neon)] hover:bg-[var(--neon2)] transition">launch interface</button>
+<body class="tv-static">
+    <!-- Matrix Background -->
+    <div class="matrix-bg">
+        <div class="matrix-rain" id="matrixRain"></div>
     </div>
-  </div>
 
-  <main id="app" class="relative z-10 opacity-0 transition-opacity duration-500 pointer-events-none">
-    <div class="fixed top-3 left-1/2 -translate-x-1/2 text-emerald-400/80 text-[10px] tracking-[.35em] uppercase select-none"><span id="clock">--:--</span></div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="typewriter" id="typewriter"></div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+        <div class="mt-4 text-sm opacity-70">Initializing portfolio...</div>
+    </div>
 
-    <section id="home" role="panel" class="min-h-[100svh] grid place-items-start sm:place-items-center py-12">
-      <div class="gridframe neon-border p-8 md:p-12 w-[92vw] max-w-5xl bg-black/30 backdrop-blur-sm reveal">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <div class="text-emerald-400/70 text-xs tracking-[.35em] uppercase">system_status: <span class="animate-flicker">active</span></div>
-            <h1 class="orbitron text-5xl md:text-7xl font-black text-emerald-300 drop-shadow-[0_0_20px_rgba(0,255,132,.35)] mt-3 neon-flicker">MOSTAFA <span class="text-emerald-200">MAHMOUD</span></h1>
-            <p class="mt-3 text-emerald-200/80 text-lg">Graphic Designer &amp; <span class="text-emerald-300">MEAN Stack Developer</span></p>
-            <div class="mt-4 flex flex-wrap gap-2 text-[11px] text-emerald-300/80">
-              <span class="px-2.5 py-1 rounded-md ring-1 ring-emerald-500/50 bg-emerald-500/10">Design since 2021</span>
-              <span class="px-2.5 py-1 rounded-md ring-1 ring-emerald-500/50 bg-emerald-500/10">Frontend since 2024</span>
-              <span class="px-2.5 py-1 rounded-md ring-1 ring-emerald-500/50 bg-emerald-500/10">MEAN since 2025</span>
+    <!-- Navigation -->
+    <nav class="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col space-y-4">
+        <div class="nav-dot active" data-section="0"></div>
+        <div class="nav-dot" data-section="1"></div>
+        <div class="nav-dot" data-section="2"></div>
+        <div class="nav-dot" data-section="3"></div>
+        <div class="nav-dot" data-section="4"></div>
+        <div class="nav-dot" data-section="5"></div>
+    </nav>
+
+    <!-- Main Container -->
+    <div id="mainContainer" class="hidden">
+        <!-- Redesigned Landing Section with billboard name -->
+        <section class="section active" id="section0">
+            <div class="text-center w-full max-w-6xl mx-auto px-4 sm:px-8">
+                <div class="billboard-name" id="billboardName">MOSTAFA MAHMOUD</div>
+                <div class="typing-subtitle neon-flicker" id="typingSubtitle"></div>
+                <div class="scroll-indicator">
+                    <div>SCROLL TO EXPLORE</div>
+                    <div class="text-xs mt-1">↓</div>
+                </div>
             </div>
-          </div>
-          <div class="md:text-right">
-            <div class="text-xs tracking-[.35em] uppercase text-emerald-400/70">connect</div>
-            <div class="mt-2 flex md:justify-end gap-3 flex-wrap">
-              <a class="px-3 py-1.5 rounded-lg ring-1 ring-emerald-600/60 hover:bg-emerald-500/10" target="_blank" href="https://www.linkedin.com/in/mostafa-mahmoud-9094b6272/">LinkedIn</a>
-              <a class="px-3 py-1.5 rounded-lg ring-1 ring-emerald-600/60 hover:bg-emerald-500/10" target="_blank" href="https://www.behance.net/mostafamahmoud55">Behance</a>
-              <a class="px-3 py-1.5 rounded-lg ring-1 ring-emerald-600/60 hover:bg-emerald-500/10" target="_blank" href="https://www.facebook.com/mostafa.mahmoud.612907/">Facebook</a>
-              <a class="px-3 py-1.5 rounded-lg ring-1 ring-emerald-600/60 hover:bg-emerald-500/10" target="_blank" href="https://www.tiktok.com/@mostafa_9180">TikTok</a>
-              <a class="px-3 py-1.5 rounded-lg ring-1 ring-emerald-600/60 hover:bg-emerald-500/10" target="_blank" href="https://www.freelancer.com/u/Mostafa9182">Freelancer</a>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="section1">
+            <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
+                <div class="cyber-border p-4 sm:p-12 rounded-lg">
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker">ABOUT_ME.exe</h2>
+                    <div class="grid md:grid-cols-2 gap-6 sm:gap-12">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 text-green-400">PROFILE</h3>
+                            <p class="text-lg leading-relaxed opacity-90 mb-6">
+                                Creative professional with 4+ years in graphic design and expanding expertise in full-stack development. 
+                                Passionate about creating digital experiences that merge aesthetic excellence with technical innovation.
+                            </p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>Design Expertise</span>
+                                    <span class="text-green-400">95%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 95%"></div>
+                                </div>
+                                
+                                <div class="flex justify-between">
+                                    <span>Frontend Development</span>
+                                    <span class="text-green-400">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                                
+                                <div class="flex justify-between">
+                                    <span>Backend Development</span>
+                                    <span class="text-green-400">75%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 text-green-400">JOURNEY</h3>
+                            <div class="space-y-4">
+                                <div class="cyber-border p-4 rounded">
+                                    <div class="text-green-400 font-bold">2021 - 2025</div>
+                                    <div class="font-bold">Graphic Designer</div>
+                                    <div class="text-sm opacity-80">4 years of creating visual identities, branding, and digital assets</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded">
+                                    <div class="text-green-400 font-bold">2024 - 2025</div>
+                                    <div class="font-bold">Frontend Developer</div>
+                                    <div class="text-sm opacity-80">Transitioned to web development, mastering modern frontend technologies</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded">
+                                    <div class="text-green-400 font-bold">2025 - Present</div>
+                                    <div class="font-bold">MEAN Stack Developer</div>
+                                    <div class="text-sm opacity-80">Full-stack development with MongoDB, Express, Angular, Node.js</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="my-6 h-px w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent"></div>
-        <p id="heroType" class="text-emerald-200/80 caret"></p>
-      </div>
-    </section>
+        </section>
 
-    <section id="about" role="panel" class="min-h-[100svh] grid place-items-start sm:place-items-center py-12">
-      <div class="gridframe neon-border p-8 md:p-12 w-[92vw] max-w-5xl bg-black/30 backdrop-blur-sm reveal">
-        <div class="text-xs tracking-[.35em] text-emerald-400/70 uppercase mb-2">about</div>
-        <h2 class="text-4xl md:text-5xl font-black text-emerald-300 drop-shadow-[0_0_14px_rgba(16,185,129,.45)] neon-flicker">Curious maker of brands & apps</h2>
-        <p class="mt-4 text-emerald-200/80 leading-relaxed">I'm Mostafa, a <span class="text-emerald-300">Graphic Designer</span> with 4+ years crafting logos, social packs and systems — and a <span class="text-emerald-300">MEAN stack developer</span> creating practical, production‑ready web apps. I like minimal, clear interfaces with a futuristic twist.</p>
-        <ul class="mt-6 grid md:grid-cols-3 gap-4 text-emerald-200/80 text-sm">
-          <li class="ring-1 ring-emerald-600/40 rounded-lg p-4 bg-emerald-500/5"><span class="block text-emerald-400/80 text-xs uppercase tracking-[.25em]">Focus</span> Visual Identity • UI/UX • Web Apps</li>
-          <li class="ring-1 ring-emerald-600/40 rounded-lg p-4 bg-emerald-500/5"><span class="block text-emerald-400/80 text-xs uppercase tracking-[.25em]">Location</span> Egypt • Remote work friendly</li>
-          <li class="ring-1 ring-emerald-600/40 rounded-lg p-4 bg-emerald-500/5"><span class="block text-emerald-400/80 text-xs uppercase tracking-[.25em]">Contact</span> <a class="underline hover:text-emerald-300" href="tel:+2001271366184">+20 0127 136 6184</a></li>
-        </ul>
-      </div>
-    </section>
+        <!-- Skills Section -->
+        <section class="section" id="section2">
+            <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
+                <div class="cyber-border p-4 sm:p-12 rounded-lg">
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker">SKILLS_MATRIX.db</h2>
+                    <div class="grid md:grid-cols-2 gap-6 sm:gap-12">
+                        <div>
+                            <h3 class="text-xl font-bold mb-6 text-green-400">GRAPHIC DESIGN</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Photoshop</div>
+                                    <div class="text-sm opacity-80">Advanced</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Illustrator</div>
+                                    <div class="text-sm opacity-80">Expert</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">InDesign</div>
+                                    <div class="text-sm opacity-80">Advanced</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Figma</div>
+                                    <div class="text-sm opacity-80">Expert</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">AI Tools</div>
+                                    <div class="text-sm opacity-80">Proficient</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Branding</div>
+                                    <div class="text-sm opacity-80">Expert</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-6 text-green-400">MEAN STACK</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Node.js</div>
+                                    <div class="text-sm opacity-80">Advanced</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Express</div>
+                                    <div class="text-sm opacity-80">Advanced</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Angular</div>
+                                    <div class="text-sm opacity-80">Intermediate</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">MongoDB</div>
+                                    <div class="text-sm opacity-80">Advanced</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Git/GitHub</div>
+                                    <div class="text-sm opacity-80">Advanced</div>
+                                </div>
+                                <div class="cyber-border p-4 rounded text-center hover:bg-green-900 transition-all duration-300">
+                                    <div class="font-bold">Postman</div>
+                                    <div class="text-sm opacity-80">Proficient</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section id="skills" role="panel" class="min-h-[100svh] grid place-items-start sm:place-items-center py-12">
-      <div class="gridframe neon-border p-8 md:p-12 w-[92vw] max-w-5xl bg-black/30 backdrop-blur-sm reveal">
-        <div class="text-xs tracking-[.35em] text-emerald-400/70 uppercase mb-2">skills</div>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div>
-            <h3 class="text-2xl text-emerald-300 font-bold mb-3">Graphic Design</h3>
-            <ul class="grid grid-cols-2 gap-2 text-sm text-emerald-200/80">
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Photoshop</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Illustrator</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">InDesign</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Figma</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">AI Tools</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">and more…</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-2xl text-emerald-300 font-bold mb-3">MEAN Stack</h3>
-            <ul class="grid grid-cols-2 gap-2 text-sm text-emerald-200/80">
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Node.js</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Express</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Angular</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">MongoDB</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Git & GitHub</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">Postman</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">REST APIs</li>
-              <li class="ring-1 ring-emerald-600/40 rounded-md px-3 py-2 bg-emerald-500/10">and more…</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+        <!-- Services Section -->
+        <section class="section" id="section3">
+            <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
+                <div class="cyber-border p-4 sm:p-12 rounded-lg">
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker ">SERVICES.json</h2>
+                    <div class="grid md:grid-cols-3 gap-4 sm:gap-8">
+                        <div class="cyber-border p-6 rounded hover:bg-green-900 transition-all duration-300 float">
+                            <div class="text-2xl mb-4 text-green-400"></div>
+                            <h3 class="text-xl font-bold mb-4">Graphic Design</h3>
+                            <ul class="space-y-2 text-sm opacity-80">
+                                <li>• Brand Identity Design</li>
+                                <li>• Logo Creation</li>
+                                <li>• Print Design</li>
+                                <li>• Digital Assets</li>
+                                <li>• UI/UX Design</li>
+                            </ul>
+                        </div>
+                        <div class="cyber-border p-6 rounded hover:bg-green-900 transition-all duration-300 float" style="animation-delay: 0.5s;">
+                            <div class="text-2xl mb-4 text-green-400"></div>
+                            <h3 class="text-xl font-bold mb-4">Frontend Development</h3>
+                            <ul class="space-y-2 text-sm opacity-80">
+                                <li>• Responsive Web Design</li>
+                                <li>• Angular Applications</li>
+                                <li>• Interactive Interfaces</li>
+                                <li>• Performance Optimization</li>
+                                <li>• Cross-browser Compatibility</li>
+                            </ul>
+                        </div>
+                        <div class="cyber-border p-6 rounded hover:bg-green-900 transition-all duration-300 float" style="animation-delay: 1s;">
+                            <div class="text-2xl mb-4 text-green-400"></div>
+                            <h3 class="text-xl font-bold mb-4">Full-Stack Development</h3>
+                            <ul class="space-y-2 text-sm opacity-80">
+                                <li>• MEAN Stack Applications</li>
+                                <li>• API Development</li>
+                                <li>• Database Design</li>
+                                <li>• Server Configuration</li>
+                                <li>• End-to-end Solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section id="services" role="panel" class="min-h-[100svh] grid place-items-start sm:place-items-center py-12">
-      <div class="gridframe neon-border p-8 md:p-12 w-[92vw] max-w-5xl bg-black/30 backdrop-blur-sm reveal">
-        <div class="text-xs tracking-[.35em] text-emerald-400/70 uppercase mb-2 neon-flicker">services</div>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="ring-1 ring-emerald-600/40 rounded-xl p-5 bg-emerald-500/5 card"><h4 class="text-xl text-emerald-300 font-semibold">Brand & Visual Identity</h4><p class="mt-2 text-emerald-200/80">Logos, systems, social kits with clean futuristic style.</p></div>
-          <div class="ring-1 ring-emerald-600/40 rounded-xl p-5 bg-emerald-500/5 card"><h4 class="text-xl text-emerald-300 font-semibold">Web Apps (MEAN)</h4><p class="mt-2 text-emerald-200/80">API + Angular front‑end, auth, CRUD, dashboards.</p></div>
-          <div class="ring-1 ring-emerald-600/40 rounded-xl p-5 bg-emerald-500/5 card"><h4 class="text-xl text-emerald-300 font-semibold">UI/UX Design</h4><p class="mt-2 text-emerald-200/80">Figma flows, interactive prototypes, design systems.</p></div>
-          <div class="ring-1 ring-emerald-600/40 rounded-xl p-5 bg-emerald-500/5 card"><h4 class="text-xl text-emerald-300 font-semibold">Content & Creatives</h4><p class="mt-2 text-emerald-200/80">Ads, motion snippets, high‑conversion visuals.</p></div>
-        </div>
-      </div>
-    </section>
+        <!-- Projects Section -->
+        <section class="section" id="section4">
+            <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
+                <div class="cyber-border p-4 sm:p-12 rounded-lg">
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker">PROJECTS.log</h2>
+                    <div class="grid md:grid-cols-3 gap-4 sm:gap-8">
+                        <div class="project-card p-6 rounded-lg">
+                            <h3 class="text-xl font-bold mb-4 text-green-400">SE.AGENCY</h3>
+                            <p class="text-sm opacity-80 mb-4">
+                                Comprehensive website for a media agency featuring modern design, 
+                                portfolio showcase, and client management system.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">Design</span>
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">Frontend</span>
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">Branding</span>
+                            </div>
+                            <a href="https://se.agency/" target="_blank" class="cyber-border px-4 py-2 text-sm hover:bg-green-900 transition-all duration-300">
+                                VIEW PROJECT
+                            </a>
+                        </div>
+                        
+                        <div class="project-card p-6 rounded-lg">
+                            <h3 class="text-xl font-bold mb-4 text-green-400">HOTELIA</h3>
+                            <p class="text-sm opacity-80 mb-4">
+                                Hotel booking platform with advanced search functionality, 
+                                user reviews, and integrated payment system.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">Full-Stack</span>
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">MEAN</span>
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">API</span>
+                            </div>
+                            <a href="https://hotelia.info/" target="_blank" class="cyber-border px-4 py-2 text-sm hover:bg-green-900 transition-all duration-300">
+                                VIEW PROJECT
+                            </a>
+                        </div>
+                        
+                        <div class="project-card p-6 rounded-lg">
+                            <h3 class="text-xl font-bold mb-4 text-green-400">INSPIC</h3>
+                            <p class="text-sm opacity-80 mb-4">
+                                Visual discovery platform for creative inspiration with 
+                                user-generated content and advanced categorization.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">Full-Stack</span>
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">Social</span>
+                                <span class="px-2 py-1 bg-green-900 rounded text-xs">UX</span>
+                            </div>
+                            <a href="https://github.com/Mostafa918M/inspic" target="_blank" class="cyber-border px-4 py-2 text-sm hover:bg-green-900 transition-all duration-300">
+                                VIEW PROJECT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section id="projects" role="panel" class="min-h-[100svh] grid place-items-start sm:place-items-center py-12">
-      <div class="gridframe neon-border p-8 md:p-12 w-[92vw] max-w-6xl bg-black/30 backdrop-blur-sm reveal">
-        <div class="text-xs tracking-[.35em] text-emerald-400/70 uppercase mb-2 neon-flicker">projects</div>
-        <div class="grid lg:grid-cols-3 gap-6">
-          <article class="ring-1 ring-emerald-600/40 rounded-xl p-5 bg-emerald-500/5 flex flex-col">
-            <header><h5 class="text-emerald-300 text-xl font-semibold">SE.Agency</h5><p class="text-emerald-200/70 text-sm">Website • Media Agency</p></header>
-            <p class="mt-3 text-emerald-200/80">High‑contrast landing with modular sections, tuned for campaigns & reels.</p>
-            <div class="mt-auto pt-4 text-sm text-emerald-300/80">Stack: Angular, Node, SCSS</div>
-            <a href="https://se.agency/" target="_blank" class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60">Preview</a>
-          </article>
-          <article class="ring-1 ring-emerald-600/40 rounded-xl p-5 bg-emerald-500/5 flex flex-col">
-            <header><h5 class="text-emerald-300 text-xl font-semibold">Hotelia</h5><p class="text-emerald-200/70 text-sm">Booking Website • Travel/Stay</p></header>
-            <p class="mt-3 text-emerald-200/80">Search, filter, and reserve stays with clear flows and trust cues.</p>
-            <div class="mt-auto pt-4 text-sm text-emerald-300/80">Stack: Angular, Express, MongoDB</div>
-            <a href="https://hotelia.info/" class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60">Preview</a>
-          </article>
-          <article class="ring-1 ring-emerald-600/40 rounded-xl p-5 bg-emerald-500/5 flex flex-col">
-            <header><h5 class="text-emerald-300 text-xl font-semibold">Inspic</h5><p class="text-emerald-200/70 text-sm">Full‑stack Visual Board</p></header>
-            <p class="mt-3 text-emerald-200/80">A performant, grid‑style visual discovery app with boards, save & explore.</p>
-            <div class="mt-auto pt-4 text-sm text-emerald-300/80">Stack: Angular, Node, MongoDB</div>
-            <a href="https://github.com/Mostafa918M/inspic" class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60">Preview</a>
-          </article>
-        </div>
-      </div>
-    </section>
+        <!-- Contact Section -->
+        <section class="section" id="section5">
+            <div class="w-full max-w-4xl mx-auto px-4 sm:px-8">
+                <div class="cyber-border p-4 sm:p-12 rounded-lg text-center">
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron']">CONTACT.connect()</h2>
+                    <p class="text-base sm:text-lg mb-4 sm:mb-8 opacity-80">Ready to collaborate? Let's create something amazing together.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 text-left">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 text-green-400">DIRECT CONTACT</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-400"></span>
+                                    <a href="tel:+2001271366184" class="hover:text-green-300 transition-colors">
+                                        +20 01271366184
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 text-green-400">SOCIAL NETWORKS</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-400"></span>
+                                    <a href="https://www.linkedin.com/in/mostafa-mahmoud-9094b6272/" target="_blank" class="hover:text-green-300 transition-colors">
+                                        LinkedIn Profile
+                                    </a>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-400"></span>
+                                    <a href="https://www.behance.net/mostafamahmoud55" target="_blank" class="hover:text-green-300 transition-colors">
+                                        Behance Portfolio
+                                    </a>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-400"></span>
+                                    <a href="https://www.facebook.com/mostafa.mahmoud.612907/" target="_blank" class="hover:text-green-300 transition-colors">
+                                        Facebook
+                                    </a>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-400"></span>
+                                    <a href="https://www.tiktok.com/@mostafa_9180" target="_blank" class="hover:text-green-300 transition-colors">
+                                        TikTok
+                                    </a>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-400"></span>
+                                    <a href="https://www.freelancer.com/u/Mostafa9182" target="_blank" class="hover:text-green-300 transition-colors">
+                                        Freelancer Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-8 border-t border-green-400">
+                        <p class="text-sm opacity-60">© 2025 Mostafa Mahmoud. All rights reserved.</p>
+                        <p class="text-xs opacity-40 mt-2">System Status: ONLINE | Last Updated: 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-    <section id="contact" role="panel" class="min-h-[100svh] grid place-items-start sm:place-items-center py-12">
-      <div class="gridframe neon-border p-8 md:p-12 w-[92vw] max-w-4xl bg-black/30 backdrop-blur-sm reveal text-center">
-        <div class="text-xs tracking-[.35em] text-emerald-400/70 uppercase mb-2 neon-flicker">contact</div>
-        <h3 class="text-4xl font-black text-emerald-300">Let’s build something clean & <span class="neon-flicker">fast</span></h3>
-        <p class="mt-3 text-emerald-200/80">Call or message me directly, or reach out on your favorite platform.</p>
-        <div class="mt-6 flex flex-wrap justify-center gap-3">
-          <a class="px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60" href="tel:+2001271366184">+20 0127 136 6184</a>
-          <a class="px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60" target="_blank" href="https://www.linkedin.com/in/mostafa-mahmoud-9094b6272/">LinkedIn</a>
-          <a class="px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60" target="_blank" href="https://www.behance.net/mostafamahmoud55">Behance</a>
-          <a class="px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60" target="_blank" href="https://www.facebook.com/mostafa.mahmoud.612907/">Facebook</a>
-          <a class="px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60" target="_blank" href="https://www.tiktok.com/@mostafa_9180">TikTok</a>
-          <a class="px-4 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 ring-1 ring-emerald-600/60" target="_blank" href="https://www.freelancer.com/u/Mostafa9182">Freelancer</a>
-        </div>
-        <p class="mt-6 text-xs tracking-[.35em] text-emerald-400/70">© <span id="year"></span> Mostafa Mahmoud</p>
-      </div>
-    </section>
-  </main>
+    <script>
+        function isMobileDevice() {
+            return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
 
-  <div class="fixed right-4 top-1/2 -translate-y-1/2 z-[2] hidden md:flex flex-col gap-2">
-    <a href="#home" class="w-2 h-2 rounded-full bg-emerald-800/50 hover:bg-emerald-400 transition"></a>
-    <a href="#about" class="w-2 h-2 rounded-full bg-emerald-800/50 hover:bg-emerald-400 transition"></a>
-    <a href="#skills" class="w-2 h-2 rounded-full bg-emerald-800/50 hover:bg-emerald-400 transition"></a>
-    <a href="#services" class="w-2 h-2 rounded-full bg-emerald-800/50 hover:bg-emerald-400 transition"></a>
-    <a href="#projects" class="w-2 h-2 rounded-full bg-emerald-800/50 hover:bg-emerald-400 transition"></a>
-    <a href="#contact" class="w-2 h-2 rounded-full bg-emerald-800/50 hover:bg-emerald-400 transition"></a>
-  </div>
+        function createMatrixRain() {
+            const matrixRain = document.getElementById('matrixRain');
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+            
+            for (let i = 0; i < 40; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = Math.random() * 100 + '%';
+                column.style.animationDuration = (Math.random() * 6 + 4) + 's';
+                column.style.animationDelay = Math.random() * 3 + 's';
+                
+                let text = '';
+                for (let j = 0; j < 15; j++) {
+                    text += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
+                }
+                column.innerHTML = text;
+                
+                matrixRain.appendChild(column);
+            }
+        }
 
-  <script>
-    // Loader progress
-    const loader = document.getElementById('loader');
-    const bar = document.getElementById('bar');
-    const pct = document.getElementById('pct');
-    const launch = document.getElementById('launch');
-    let p = 0; const timer = setInterval(()=>{ p += Math.floor(Math.random()*7)+1; if(p>100) p=100; bar.style.width=p+'%'; pct.textContent=p+'%'; if(p===100){ clearInterval(timer);} }, 120);
-    function closeLoader(){ loader.style.opacity='0'; setTimeout(()=> loader.style.display='none', 420); }
-    launch.addEventListener('click', closeLoader);
-    const auto = setInterval(()=>{ if(p===100){ closeLoader(); clearInterval(auto);} }, 300);
-setTimeout(()=>{
-  document.getElementById('loader').style.display='none';
-  const app = document.getElementById('app');
-  app.classList.remove('pointer-events-none');
-  app.style.opacity = '1';   
-},2000);
-    
-    const clock = document.getElementById('clock');
-    function tick(){ const d=new Date(); clock.textContent=d.toLocaleString(); }
-    setInterval(tick, 1000); tick();
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
 
-    
-    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } }); },{ threshold: .2 });
-    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+        function initializeLoading() {
+            const typewriterElement = document.getElementById('typewriter');
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContainer = document.getElementById('mainContainer');
+            
+            typeWriter(typewriterElement, 'MOSTAFA.MAHMOUD', 150);
+            
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    mainContainer.classList.remove('hidden');
+                    setTimeout(() => {
+                        startSubtitleTyping();
+                    }, 500);
+                }, 500);
+            }, 4000);
+        }
 
-    
-    document.getElementById('year').textContent = new Date().getFullYear();
+        function startSubtitleTyping() {
+            const subtitleElement = document.getElementById('typingSubtitle');
+            const texts = [
+                'Graphic Designer',
+                'MEAN Stack Developer',
+                'Creative Professional',
+                'Full-Stack Developer'
+            ];
+            let currentTextIndex = 0;
+            
+            function typeNextText() {
+                typeWriter(subtitleElement, texts[currentTextIndex], 100);
+                currentTextIndex = (currentTextIndex + 1) % texts.length;
+                
+                setTimeout(() => {
+                    setTimeout(() => {
+                        subtitleElement.innerHTML = '';
+                        setTimeout(typeNextText, 500);
+                    }, 2000);
+                }, texts[currentTextIndex === 0 ? texts.length - 1 : currentTextIndex - 1].length * 100 + 1000);
+            }
+            
+            typeNextText();
+        }
 
-   
-    const canvas = document.getElementById('codeRain');
-    const ctx = canvas.getContext('2d');
-    let w,h,columns,drops;
-    const chars = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    function resize(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; columns=Math.floor(w/14); drops=Array(columns).fill(0).map(()=> Math.random()*h); }
-    function draw(){
-      ctx.fillStyle='rgba(7,15,10,0.06)'; 
-      ctx.fillRect(0,0,w,h);
-      ctx.fillStyle='#16f1a6'; ctx.font='14px "Share Tech Mono"';
-      for(let i=0;i<columns;i++){
-        const text=chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillText(text, i*14, drops[i]);
-        if(drops[i]>h || Math.random()>0.985){ drops[i]=0; } else { drops[i]+=0.3; }
-      }
-      requestAnimationFrame(draw);
-    }
-    resize(); draw(); window.addEventListener('resize', resize);
+        let currentSection = 0;
+        const sections = document.querySelectorAll('.section');
+        const navDots = document.querySelectorAll('.nav-dot');
 
-    const heroEl = document.getElementById('heroType');
-    const heroText = 'I design strong visual identities and build fast, clean web apps. Scroll to explore.';
-    function typeHero(i=0){ if(!heroEl) return; heroEl.textContent = heroText.slice(0, i); if(i <= heroText.length) setTimeout(()=>typeHero(i+1), 28); }
-    const afterClose = closeLoader; closeLoader = function(){ afterClose(); setTimeout(typeHero, 300); };
+        function showSection(index) {
+            if (index === currentSection) return;
+            
+            sections.forEach((section, i) => {
+                section.classList.remove('active');
+                if (i === index) {
+                    setTimeout(() => {
+                        section.classList.add('active');
+                    }, 100);
+                }
+            });
+            
+            navDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            currentSection = index;
+        }
 
-    const panels = Array.from(document.querySelectorAll('section[role="panel"]'));
-    let currentIndex = 0, busy=false;
-    function goTo(idx){ if(idx<0 || idx>=panels.length) return; busy=true; panels[idx].scrollIntoView({behavior:'smooth'}); setTimeout(()=>busy=false, 850); }
-    window.addEventListener('wheel', (e)=>{ if(busy) return; if(e.deltaY>10) goTo(currentIndex+1); else if(e.deltaY<-10) goTo(currentIndex-1); }, {passive:true});
-    const sectionWatcher = new IntersectionObserver((entries)=>{ entries.forEach(en=>{ if(en.isIntersecting){ currentIndex = panels.indexOf(en.target); } }); }, { threshold: 0.6 });
-    panels.forEach(p=> sectionWatcher.observe(p));
-  </script>
+        let isScrolling = false;
+        
+        function handleScroll(e) {
+            if (isMobileDevice()) return;
+            
+            e.preventDefault();
+            
+            if (isScrolling) return;
+            
+            isScrolling = true;
+            
+            if (e.deltaY > 0 && currentSection < sections.length - 1) {
+                showSection(currentSection + 1);
+            } else if (e.deltaY < 0 && currentSection > 0) {
+                showSection(currentSection - 1);
+            }
+            
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000);
+        }
+
+        // Navigation Dots
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (!isMobileDevice()) {
+                    showSection(index);
+                }
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (isScrolling || isMobileDevice()) return;
+            
+            if (e.key === 'ArrowDown' && currentSection < sections.length - 1) {
+                showSection(currentSection + 1);
+            } else if (e.key === 'ArrowUp' && currentSection > 0) {
+                showSection(currentSection - 1);
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createMatrixRain();
+            initializeLoading();
+            
+            setTimeout(() => {
+                if (!isMobileDevice()) {
+                    document.addEventListener('wheel', handleScroll, { passive: false });
+                }
+            }, 4500);
+        });
+
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let isTouching = false;
+
+        document.addEventListener('touchstart', (e) => {
+            // Only handle touch gestures on desktop (for trackpad users)
+            if (isMobileDevice()) return;
+            touchStartY = e.changedTouches[0].screenY;
+            isTouching = true;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            // Only handle touch gestures on desktop (for trackpad users)
+            if (!isTouching || isMobileDevice()) return;
+            touchEndY = e.changedTouches[0].screenY;
+            handleTouchGesture();
+            isTouching = false;
+        });
+
+        function handleTouchGesture() {
+            if (isScrolling || isMobileDevice()) return;
+            
+            const swipeThreshold = 80;
+            const diff = touchStartY - touchEndY;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentSection < sections.length - 1) {
+                    showSection(currentSection + 1);
+                } else if (diff < 0 && currentSection > 0) {
+                    showSection(currentSection - 1);
+                }
+            }
+        }
+    </script>
 </body>
 </html>
