@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mostafa Mahmoud - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400;700&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -16,13 +16,86 @@
         }
 
         body {
-            font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-family: 'Courier Prime', monospace;
             background: #0a0a0a;
             color: #00ff41;
             overflow: hidden;
         }
 
         /* Matrix Background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a 0%, #0f0f0f 50%, #0a0a0a 100%);
+            will-change: transform;
+        }
+
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100px;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            color: #00ff41;
+            animation: matrix-fall linear infinite;
+            text-shadow: 0 0 5px #00ff41;
+            opacity: 0.7;
+            will-change: transform, opacity;
+            transform: translate3d(0, 0, 0); /* Hardware acceleration */
+        }
+
+        /* Slower and more optimized matrix animation */
+        @keyframes matrix-fall {
+            0% { 
+                transform: translate3d(0, -100vh, 0); 
+                opacity: 0.7; 
+            }
+            100% { 
+                transform: translate3d(0, 100vh, 0); 
+                opacity: 0; 
+            }
+        }
+
+        /* Optimized TV Static Effect with reduced frequency */
+        .tv-static::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 65, 0.01) 2px,
+                    rgba(0, 255, 65, 0.01) 4px
+                );
+            animation: tv-lines 0.4s linear infinite;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* Slower TV static animation */
+        @keyframes tv-lines {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(0, 8px, 0); }
+        }
+
         .matrix-bg {
             position: fixed;
             top: 0;
@@ -177,6 +250,8 @@
             letter-spacing: 0.1em;
             text-align: center;
             margin-bottom: 2rem;
+            will-change: transform, text-shadow;
+            transform: translate3d(0, 0, 0);
         }
 
         @keyframes billboard-glow {
@@ -185,15 +260,14 @@
                     0 0 20px #00ff41,
                     0 0 40px #00ff41,
                     0 0 60px #00ff41;
-                transform: scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
             }
             100% { 
                 text-shadow: 
-                    0 0 30px #00ff41,
-                    0 0 60px #00ff41,
-                    0 0 90px #00ff41,
-                    0 0 120px #00ff41;
-                transform: scale(1.02);
+                    0 0 25px #00ff41,
+                    0 0 50px #00ff41,
+                    0 0 75px #00ff41;
+                transform: translate3d(0, 0, 0) scale(1.01);
             }
         }
 
@@ -285,16 +359,18 @@
         }
 
         .pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 3s infinite;
+            will-change: opacity;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(0, -15px, 0); }
         }
 
         .float {
-            animation: float 3s ease-in-out infinite;
+            animation: float 4s ease-in-out infinite;
+            will-change: transform;
         }
 
         /* Responsive improvements */
@@ -303,12 +379,31 @@
                 overflow: auto; /* Enable normal scrolling on mobile */
             }
             
+            /* Disable heavy animations on mobile */
+            .matrix-column {
+                animation-duration: 8s !important; /* Slower on mobile */
+            }
+            
+            .billboard-name {
+                animation: none; /* Disable glow animation on mobile */
+                text-shadow: 0 0 15px #00ff41; /* Static glow */
+            }
+            
+            .tv-static::before {
+                animation: none; /* Disable TV static on mobile */
+                opacity: 0.3;
+            }
+            
+            .float {
+                animation: none; /* Disable float animation on mobile */
+            }
+            
             .section {
-                position: relative; /* Change from fixed to relative positioning on mobile */
-                opacity: 1; /* Always show sections on mobile */
-                transform: translateY(0); /* Remove transform on mobile */
+                position: relative;
+                opacity: 1;
+                transform: translateY(0);
                 z-index: 1;
-                margin-bottom: 2rem; /* Add spacing between sections on mobile */
+                margin-bottom: 2rem;
             }
             
             .billboard-name {
@@ -421,12 +516,6 @@
                 display: none;
             }
         }
-
-         @keyframes neonFlicker {
-  0%,18%,22%,25%,53%,57%,100% { opacity: 1; text-shadow: 0 0 6px var(--neon), 0 0 20px rgba(0,255,132,.35); }
-  20%,24%,55% { opacity: .85; text-shadow: 0 0 2px var(--neon); }
-}
-.neon-flicker { animation: neonFlicker 4.8s infinite; }
     </style>
 </head>
 <body class="tv-static">
@@ -460,7 +549,7 @@
         <section class="section active" id="section0">
             <div class="text-center w-full max-w-6xl mx-auto px-4 sm:px-8">
                 <div class="billboard-name" id="billboardName">MOSTAFA MAHMOUD</div>
-                <div class="typing-subtitle neon-flicker" id="typingSubtitle"></div>
+                <div class="typing-subtitle" id="typingSubtitle"></div>
                 <div class="scroll-indicator">
                     <div>SCROLL TO EXPLORE</div>
                     <div class="text-xs mt-1">↓</div>
@@ -472,7 +561,7 @@
         <section class="section" id="section1">
             <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
                 <div class="cyber-border p-4 sm:p-12 rounded-lg">
-                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker">ABOUT_ME.exe</h2>
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron']">ABOUT_ME.exe</h2>
                     <div class="grid md:grid-cols-2 gap-6 sm:gap-12">
                         <div>
                             <h3 class="text-xl font-bold mb-4 text-green-400">PROFILE</h3>
@@ -535,7 +624,7 @@
         <section class="section" id="section2">
             <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
                 <div class="cyber-border p-4 sm:p-12 rounded-lg">
-                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker">SKILLS_MATRIX.db</h2>
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron']">SKILLS_MATRIX.db</h2>
                     <div class="grid md:grid-cols-2 gap-6 sm:gap-12">
                         <div>
                             <h3 class="text-xl font-bold mb-6 text-green-400">GRAPHIC DESIGN</h3>
@@ -604,7 +693,7 @@
         <section class="section" id="section3">
             <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
                 <div class="cyber-border p-4 sm:p-12 rounded-lg">
-                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker ">SERVICES.json</h2>
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron']">SERVICES.json</h2>
                     <div class="grid md:grid-cols-3 gap-4 sm:gap-8">
                         <div class="cyber-border p-6 rounded hover:bg-green-900 transition-all duration-300 float">
                             <div class="text-2xl mb-4 text-green-400"></div>
@@ -648,7 +737,7 @@
         <section class="section" id="section4">
             <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
                 <div class="cyber-border p-4 sm:p-12 rounded-lg">
-                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron'] neon-flicker">PROJECTS.log</h2>
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron']">PROJECTS.log</h2>
                     <div class="grid md:grid-cols-3 gap-4 sm:gap-8">
                         <div class="project-card p-6 rounded-lg">
                             <h3 class="text-xl font-bold mb-4 text-green-400">SE.AGENCY</h3>
@@ -777,15 +866,22 @@
             const matrixRain = document.getElementById('matrixRain');
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
             
-            for (let i = 0; i < 40; i++) {
+            const columnCount = isMobileDevice() ? 15 : 30;
+            
+            for (let i = 0; i < columnCount; i++) {
                 const column = document.createElement('div');
                 column.className = 'matrix-column';
                 column.style.left = Math.random() * 100 + '%';
-                column.style.animationDuration = (Math.random() * 6 + 4) + 's';
-                column.style.animationDelay = Math.random() * 3 + 's';
+                
+                const duration = isMobileDevice() ? 
+                    (Math.random() * 8 + 6) + 's' : 
+                    (Math.random() * 6 + 4) + 's';
+                column.style.animationDuration = duration;
+                column.style.animationDelay = Math.random() * 4 + 's';
                 
                 let text = '';
-                for (let j = 0; j < 15; j++) {
+                const charCount = isMobileDevice() ? 8 : 12;
+                for (let j = 0; j < charCount; j++) {
                     text += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
                 }
                 column.innerHTML = text;
@@ -803,6 +899,11 @@
                     element.innerHTML += text.charAt(i);
                     i++;
                     setTimeout(type, speed);
+                } else {
+                    element.style.borderRight = 'none';
+                    setTimeout(() => {
+                        element.style.borderRight = '2px solid #00ff41';
+                    }, 500);
                 }
             }
             type();
@@ -876,6 +977,7 @@
         }
 
         let isScrolling = false;
+        let scrollTimeout;
         
         function handleScroll(e) {
             if (isMobileDevice()) return;
@@ -894,7 +996,7 @@
             
             setTimeout(() => {
                 isScrolling = false;
-            }, 1000);
+            }, 1200);
         }
 
         // Navigation Dots
@@ -919,7 +1021,10 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            createMatrixRain();
+            setTimeout(() => {
+                createMatrixRain();
+            }, 100);
+            
             initializeLoading();
             
             setTimeout(() => {
@@ -927,6 +1032,10 @@
                     document.addEventListener('wheel', handleScroll, { passive: false });
                 }
             }, 4500);
+            
+            if (isMobileDevice()) {
+                document.body.classList.remove('tv-static');
+            }
         });
 
         let touchStartY = 0;
