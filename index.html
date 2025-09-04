@@ -379,23 +379,32 @@
                 overflow: auto; /* Enable normal scrolling on mobile */
             }
             
-            /* Disable heavy animations on mobile */
+            /* Completely disable heavy animations on mobile for better performance */
             .matrix-column {
-                animation-duration: 8s !important; /* Slower on mobile */
+                display: none !important; /* Remove matrix rain completely on mobile */
             }
             
             .billboard-name {
-                animation: none; /* Disable glow animation on mobile */
-                text-shadow: 0 0 15px #00ff41; /* Static glow */
+                animation: none !important; /* Disable glow animation on mobile */
+                text-shadow: 0 0 10px #00ff41 !important; /* Reduced static glow */
             }
             
             .tv-static::before {
-                animation: none; /* Disable TV static on mobile */
-                opacity: 0.3;
+                display: none !important; /* Remove TV static completely on mobile */
             }
             
             .float {
-                animation: none; /* Disable float animation on mobile */
+                animation: none !important; /* Disable float animation on mobile */
+            }
+            
+            .pulse {
+                animation: none !important; /* Disable pulse animation on mobile */
+            }
+            
+            /* Disable typewriter animation on mobile for instant display */
+            .typing-subtitle {
+                border-right: none !important; /* Remove blinking cursor on mobile */
+                animation: none !important;
             }
             
             .section {
@@ -734,7 +743,7 @@
         </section>
 
         <!-- Projects Section -->
-        <section class="section" id="section4">
+ <section class="section" id="section4">
             <div class="w-full max-w-6xl mx-auto px-4 sm:px-8">
                 <div class="cyber-border p-4 sm:p-12 rounded-lg">
                     <h2 class="text-2xl sm:text-4xl font-bold mb-4 sm:mb-8 glow-text font-['Orbitron']">PROJECTS.log</h2>
@@ -863,25 +872,26 @@
         }
 
         function createMatrixRain() {
+            if (isMobileDevice()) {
+                return; // Don't create any matrix rain on mobile
+            }
+            
             const matrixRain = document.getElementById('matrixRain');
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
             
-            const columnCount = isMobileDevice() ? 15 : 30;
+            const columnCount = 20; // Reduced for desktop too
             
             for (let i = 0; i < columnCount; i++) {
                 const column = document.createElement('div');
                 column.className = 'matrix-column';
                 column.style.left = Math.random() * 100 + '%';
                 
-                const duration = isMobileDevice() ? 
-                    (Math.random() * 8 + 6) + 's' : 
-                    (Math.random() * 6 + 4) + 's';
+                const duration = (Math.random() * 8 + 6) + 's'; // Slower animation
                 column.style.animationDuration = duration;
                 column.style.animationDelay = Math.random() * 4 + 's';
                 
                 let text = '';
-                const charCount = isMobileDevice() ? 8 : 12;
-                for (let j = 0; j < charCount; j++) {
+                for (let j = 0; j < 10; j++) {
                     text += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
                 }
                 column.innerHTML = text;
@@ -891,6 +901,12 @@
         }
 
         function typeWriter(element, text, speed = 100) {
+            if (isMobileDevice()) {
+                element.innerHTML = text;
+                element.style.borderRight = 'none';
+                return;
+            }
+            
             let i = 0;
             element.innerHTML = '';
             
@@ -936,6 +952,13 @@
                 'Creative Professional',
                 'Full-Stack Developer'
             ];
+            
+            if (isMobileDevice()) {
+                subtitleElement.innerHTML = 'Graphic Designer & MEAN Stack Developer';
+                subtitleElement.style.borderRight = 'none';
+                return;
+            }
+            
             let currentTextIndex = 0;
             
             function typeNextText() {
